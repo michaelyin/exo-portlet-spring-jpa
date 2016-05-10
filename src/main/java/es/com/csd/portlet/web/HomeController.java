@@ -1,5 +1,6 @@
 package es.com.csd.portlet.web;
 
+import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ public class HomeController {
 	private void afterPropertiesSet() {
 		if (userRepository.count() == 0) {
 			for (int i = 0; i < 45; i++) {
-				saveUser("username" + 1);
+				saveUser("username" + i);
 			}
 		}
 	}
@@ -41,7 +42,9 @@ public class HomeController {
 	public ModelAndView showHome(Locale locale, ModelAndView model) {
 		afterPropertiesSet();
 		model.addObject("users", userRepository.findByUsernameLike("user%"));
+		model.addObject("serverTime", (new Date()).toString());
 		model.setViewName("home");
+		
 
 		return model;
 	}
